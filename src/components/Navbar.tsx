@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { industries } from "@/data/industries";
+import sabasamLogo from "@/assets/sabasam-logo.png";
 
 const navLinks = [
   { label: "Home", href: "/#hero" },
   { label: "Services", href: "/#services" },
-  // Target Industries inserted separately
-  // Sample Projects inserted separately
   { label: "About Us", href: "/#about" },
   { label: "Contact", href: "/#contact" },
 ];
@@ -33,14 +32,9 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/30">
-      <div className="container mx-auto flex items-center justify-between h-16 px-6">
-        <Link to="/" className="font-display text-xl font-bold tracking-tight text-gradient">
-          SABASAM
-        </Link>
-
-        {/* Desktop */}
-        <ul className="hidden md:flex items-center gap-8">
-          {/* Home & Services */}
+      <div className="container mx-auto flex items-center justify-between h-14 px-6">
+        {/* Left: Nav links */}
+        <ul className="hidden md:flex items-center gap-7">
           {navLinks.slice(0, 2).map((l) => (
             <li key={l.href}>
               <a href={l.href} className={linkClass}>{l.label}</a>
@@ -80,35 +74,33 @@ const Navbar = () => {
             )}
           </li>
 
-          {/* Sample Projects */}
           <li>
             <Link to="/sample-projects" className={linkClass}>Sample Projects</Link>
           </li>
 
-          {/* About Us & Contact */}
           {navLinks.slice(2).map((l) => (
             <li key={l.href}>
               <a href={l.href} className={linkClass}>{l.label}</a>
             </li>
           ))}
-
-          <li>
-            <a
-              href="/#contact"
-              className="text-sm font-medium bg-primary text-primary-foreground px-5 py-2 rounded-md hover:opacity-90 transition-opacity"
-            >
-              Get in Touch
-            </a>
-          </li>
-          <li>
-            <ThemeToggle />
-          </li>
         </ul>
 
-        {/* Mobile toggle */}
+        {/* Mobile: hamburger */}
         <button className="md:hidden text-foreground" onClick={() => setOpen(!open)}>
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
+
+        {/* Right: Logo + theme toggle */}
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
+          <Link to="/" className="shrink-0">
+            <img
+              src={sabasamLogo}
+              alt="Sabasam E&C"
+              className="h-8 md:h-9 w-auto object-contain"
+            />
+          </Link>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -121,7 +113,6 @@ const Navbar = () => {
               </li>
             ))}
 
-            {/* Mobile Target Industries */}
             <li>
               <button
                 onClick={() => setMobileIndustriesOpen(!mobileIndustriesOpen)}
@@ -133,26 +124,19 @@ const Navbar = () => {
               {mobileIndustriesOpen && (
                 <ul className="mt-2 ml-4 flex flex-col gap-2">
                   <li>
-                    <Link to="/target-industries" onClick={() => setOpen(false)} className={linkClass}>
-                      All Industries
-                    </Link>
+                    <Link to="/target-industries" onClick={() => setOpen(false)} className={linkClass}>All Industries</Link>
                   </li>
                   {industries.map((ind) => (
                     <li key={ind.slug}>
-                      <Link to={`/target-industries/${ind.slug}`} onClick={() => setOpen(false)} className={linkClass}>
-                        {ind.title}
-                      </Link>
+                      <Link to={`/target-industries/${ind.slug}`} onClick={() => setOpen(false)} className={linkClass}>{ind.title}</Link>
                     </li>
                   ))}
                 </ul>
               )}
             </li>
 
-            {/* Sample Projects */}
             <li>
-              <Link to="/sample-projects" onClick={() => setOpen(false)} className={linkClass}>
-                Sample Projects
-              </Link>
+              <Link to="/sample-projects" onClick={() => setOpen(false)} className={linkClass}>Sample Projects</Link>
             </li>
 
             {navLinks.slice(2).map((l) => (
@@ -160,16 +144,6 @@ const Navbar = () => {
                 <a href={l.href} onClick={() => setOpen(false)} className={linkClass}>{l.label}</a>
               </li>
             ))}
-
-            <li>
-              <a
-                href="/#contact"
-                onClick={() => setOpen(false)}
-                className="inline-block text-sm font-medium bg-primary text-primary-foreground px-5 py-2 rounded-md"
-              >
-                Get in Touch
-              </a>
-            </li>
           </ul>
         </div>
       )}
