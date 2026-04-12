@@ -40,6 +40,9 @@ const Navbar = () => {
               Get in Touch
             </a>
           </li>
+          <li>
+            <ThemeToggle />
+          </li>
         </ul>
 
         {/* Mobile toggle */}
