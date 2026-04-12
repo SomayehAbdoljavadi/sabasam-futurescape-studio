@@ -86,10 +86,21 @@ const Navbar = () => {
           <li><ThemeToggle /></li>
         </ul>
 
-        {/* Mobile: hamburger */}
-        <button className="md:hidden text-foreground" onClick={() => setOpen(!open)}>
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        {/* Right: Logo */}
+        <div className="flex items-center gap-4">
+          <span className="md:hidden">
+            <button className="text-foreground" onClick={() => setOpen(!open)}>
+              {open ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </span>
+          <Link to="/" className="shrink-0">
+            <img
+              src={sabasamLogo}
+              alt="Sabasam E&C"
+              className="h-10 md:h-11 w-auto object-contain"
+            />
+          </Link>
+        </div>
       </div>
 
       {/* Mobile menu */}
