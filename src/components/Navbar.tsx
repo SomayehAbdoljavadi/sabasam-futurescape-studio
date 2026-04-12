@@ -33,7 +33,16 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/30">
       <div className="container mx-auto flex items-center justify-between h-14 px-6">
-        {/* Left: Nav links */}
+        {/* Left: Logo */}
+        <Link to="/" className="shrink-0">
+          <img
+            src={sabasamLogo}
+            alt="Sabasam E&C"
+            className="h-10 md:h-11 w-auto object-contain"
+          />
+        </Link>
+
+        {/* Right: Nav links */}
         <ul className="hidden md:flex items-center gap-7">
           {navLinks.slice(0, 2).map((l) => (
             <li key={l.href}>
@@ -86,21 +95,10 @@ const Navbar = () => {
           <li><ThemeToggle /></li>
         </ul>
 
-        {/* Right: Logo */}
-        <div className="flex items-center gap-4">
-          <span className="md:hidden">
-            <button className="text-foreground" onClick={() => setOpen(!open)}>
-              {open ? <X size={22} /> : <Menu size={22} />}
-            </button>
-          </span>
-          <Link to="/" className="shrink-0">
-            <img
-              src={sabasamLogo}
-              alt="Sabasam E&C"
-              className="h-10 md:h-11 w-auto object-contain"
-            />
-          </Link>
-        </div>
+        {/* Mobile: hamburger */}
+        <button className="md:hidden text-foreground" onClick={() => setOpen(!open)}>
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
       </div>
 
       {/* Mobile menu */}
