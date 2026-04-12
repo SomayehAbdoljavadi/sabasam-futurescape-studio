@@ -33,16 +33,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/30">
       <div className="container mx-auto flex items-center justify-between h-14 px-6">
-        {/* Left: Logo */}
-        <Link to="/" className="shrink-0">
-          <img
-            src={sabasamLogo}
-            alt="Sabasam E&C"
-            className="h-10 md:h-11 w-auto object-contain"
-          />
-        </Link>
-
-        {/* Center/Right: Nav links */}
+        {/* Left: Nav links */}
         <ul className="hidden md:flex items-center gap-7">
           {navLinks.slice(0, 2).map((l) => (
             <li key={l.href}>
