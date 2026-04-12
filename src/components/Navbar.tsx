@@ -7,8 +7,9 @@ import { industries } from "@/data/industries";
 const navLinks = [
   { label: "Home", href: "/#hero" },
   { label: "Services", href: "/#services" },
+  // Target Industries inserted separately
+  // Sample Projects inserted separately
   { label: "About Us", href: "/#about" },
-  { label: "Why Us", href: "/#why-us" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -28,6 +29,8 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  const linkClass = "text-sm text-muted-foreground hover:text-foreground transition-colors duration-300";
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/30">
       <div className="container mx-auto flex items-center justify-between h-16 px-6">
@@ -37,14 +40,10 @@ const Navbar = () => {
 
         {/* Desktop */}
         <ul className="hidden md:flex items-center gap-8">
+          {/* Home & Services */}
           {navLinks.slice(0, 2).map((l) => (
             <li key={l.href}>
-              <a
-                href={l.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
-              >
-                {l.label}
-              </a>
+              <a href={l.href} className={linkClass}>{l.label}</a>
             </li>
           ))}
 
@@ -52,7 +51,7 @@ const Navbar = () => {
           <li className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
+              className={`flex items-center gap-1 ${linkClass}`}
             >
               Target Industries
               <ChevronDown size={14} className={`transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
@@ -81,16 +80,18 @@ const Navbar = () => {
             )}
           </li>
 
+          {/* Sample Projects */}
+          <li>
+            <Link to="/sample-projects" className={linkClass}>Sample Projects</Link>
+          </li>
+
+          {/* About Us & Contact */}
           {navLinks.slice(2).map((l) => (
             <li key={l.href}>
-              <a
-                href={l.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300"
-              >
-                {l.label}
-              </a>
+              <a href={l.href} className={linkClass}>{l.label}</a>
             </li>
           ))}
+
           <li>
             <a
               href="/#contact"
@@ -116,13 +117,7 @@ const Navbar = () => {
           <ul className="flex flex-col gap-4 px-6 py-6">
             {navLinks.slice(0, 2).map((l) => (
               <li key={l.href}>
-                <a
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {l.label}
-                </a>
+                <a href={l.href} onClick={() => setOpen(false)} className={linkClass}>{l.label}</a>
               </li>
             ))}
 
@@ -130,7 +125,7 @@ const Navbar = () => {
             <li>
               <button
                 onClick={() => setMobileIndustriesOpen(!mobileIndustriesOpen)}
-                className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className={`flex items-center gap-1 ${linkClass}`}
               >
                 Target Industries
                 <ChevronDown size={14} className={`transition-transform duration-200 ${mobileIndustriesOpen ? "rotate-180" : ""}`} />
@@ -138,21 +133,13 @@ const Navbar = () => {
               {mobileIndustriesOpen && (
                 <ul className="mt-2 ml-4 flex flex-col gap-2">
                   <li>
-                    <Link
-                      to="/target-industries"
-                      onClick={() => setOpen(false)}
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    >
+                    <Link to="/target-industries" onClick={() => setOpen(false)} className={linkClass}>
                       All Industries
                     </Link>
                   </li>
                   {industries.map((ind) => (
                     <li key={ind.slug}>
-                      <Link
-                        to={`/target-industries/${ind.slug}`}
-                        onClick={() => setOpen(false)}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                      >
+                      <Link to={`/target-industries/${ind.slug}`} onClick={() => setOpen(false)} className={linkClass}>
                         {ind.title}
                       </Link>
                     </li>
@@ -161,17 +148,19 @@ const Navbar = () => {
               )}
             </li>
 
+            {/* Sample Projects */}
+            <li>
+              <Link to="/sample-projects" onClick={() => setOpen(false)} className={linkClass}>
+                Sample Projects
+              </Link>
+            </li>
+
             {navLinks.slice(2).map((l) => (
               <li key={l.href}>
-                <a
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {l.label}
-                </a>
+                <a href={l.href} onClick={() => setOpen(false)} className={linkClass}>{l.label}</a>
               </li>
             ))}
+
             <li>
               <a
                 href="/#contact"
