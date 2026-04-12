@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { industries } from "@/data/industries";
-import sabasamLogo from "@/assets/sabasam-logo.png";
+import sabasamIcon from "@/assets/sabasam-icon.png";
 
 const navLinks = [
   { label: "Home", href: "/#hero" },
@@ -33,13 +33,16 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/30">
       <div className="container mx-auto flex items-center justify-between h-14 px-6">
-        {/* Left: Logo */}
-        <Link to="/" className="shrink-0">
+        {/* Left: Logo + Title */}
+        <Link to="/" className="shrink-0 flex items-center gap-3">
           <img
-            src={sabasamLogo}
+            src={sabasamIcon}
             alt="Sabasam E&C"
-            className="h-10 md:h-11 w-auto object-contain"
+            className="h-9 md:h-10 w-auto object-contain"
           />
+          <span className="hidden sm:block font-display text-xs md:text-sm font-bold tracking-tight text-foreground leading-tight">
+            SABASAM E&C: PRE-COMMISSIONING AND<br className="hidden md:block" /> COMMISSIONING CONSULTING SERVICES
+          </span>
         </Link>
 
         {/* Right: Nav links */}
