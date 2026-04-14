@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import aboutBg from "@/assets/about-bg.jpg";
 
 const AboutSection = () => (
@@ -15,23 +16,30 @@ const AboutSection = () => (
         <p className="text-muted-foreground leading-relaxed mb-6">
           Sabasam E&C is a leading consulting company specializing in pre-commissioning, commissioning, startup, and performance testing in oil & gas, power, and industrial sectors.
         </p>
-        <p className="text-muted-foreground leading-relaxed">
+        <p className="text-muted-foreground leading-relaxed mb-8">
           We pride ourselves on our team's expertise and our commitment to delivering exceptional services to our clients. With decades of combined experience, we bring precision, reliability, and innovation to every project.
         </p>
+        <Link
+          to="/about-us"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary/10 text-primary font-medium text-sm hover:bg-primary/20 border border-primary/20 hover:border-primary/40 transition-all duration-300"
+        >
+          Learn More
+          <span aria-hidden="true">→</span>
+        </Link>
       </div>
 
       {/* Image */}
-      <div className="relative rounded-lg overflow-hidden glow-accent">
+      <Link to="/about-us" className="relative rounded-lg overflow-hidden glow-accent group cursor-pointer">
         <img
           src={aboutBg}
           alt="Sabasam engineering team"
           loading="lazy"
           width={1280}
           height={860}
-          className="w-full h-80 md:h-[420px] object-cover"
+          className="w-full h-80 md:h-[420px] object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
-      </div>
+      </Link>
     </div>
   </section>
 );
