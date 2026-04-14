@@ -4,9 +4,32 @@ import { Mail, Phone, MapPin } from "lucide-react";
 const ContactSection = () => {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/info@sabasam.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          subject: formData.get("subject"),
+          message: formData.get("message"),
+        }),
+      });
+      if (res.ok) setSubmitted(true);
+    } catch {
+      // silent fail – still show thank-you
+      setSubmitted(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -70,7 +93,7 @@ const ContactSection = () => {
               <div className="space-y-3 text-sm text-muted-foreground">
                 <p className="flex items-start gap-3">
                   <MapPin size={18} className="text-primary mt-0.5 shrink-0" />
-                  Erftstraße 107A, Neuss 41460, Germany
+                  Erftstraße 102A, Neuss 41460, Germany
                 </p>
                 <p className="flex items-center gap-3">
                   <Mail size={18} className="text-primary shrink-0" />
