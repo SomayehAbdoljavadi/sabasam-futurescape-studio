@@ -82,9 +82,10 @@ const ContactSection = () => {
                 />
                 <button
                   type="submit"
-                  className="bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-md hover:opacity-90 transition-opacity w-full sm:w-auto"
+                  disabled={sending}
+                  className="bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-md hover:opacity-90 transition-opacity w-full sm:w-auto disabled:opacity-60"
                 >
-                  Submit
+                  {sending ? "Sending…" : "Submit"}
                 </button>
               </form>
             )}

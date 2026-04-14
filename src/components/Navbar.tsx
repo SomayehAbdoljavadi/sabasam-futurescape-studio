@@ -8,7 +8,7 @@ import sabasamIcon from "@/assets/sabasam-icon.png";
 const navLinks = [
   { label: "Home", href: "/#hero" },
   { label: "Services", href: "/#services" },
-  { label: "About Us", href: "/#about" },
+  { label: "About Us", href: "/about-us", isRoute: true },
   { label: "Contact", href: "/#contact" },
 ];
 
