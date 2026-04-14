@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import TargetIndustries from "./pages/TargetIndustries.tsx";
 import IndustryPage from "./pages/IndustryPage.tsx";
 import SampleProjects from "./pages/SampleProjects.tsx";
+import ServicePage from "./pages/ServicePage.tsx";
 import AboutUs from "./pages/AboutUs.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
