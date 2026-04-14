@@ -55,23 +55,27 @@ const ContactSection = () => {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <input
                   required
+                  name="name"
                   type="text"
                   placeholder="Full Name"
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition"
                 />
                 <input
                   required
+                  name="email"
                   type="email"
                   placeholder="Email"
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition"
                 />
                 <input
+                  name="subject"
                   type="text"
                   placeholder="Subject"
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition"
                 />
                 <textarea
                   required
+                  name="message"
                   rows={5}
                   placeholder="Message"
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition resize-none"
