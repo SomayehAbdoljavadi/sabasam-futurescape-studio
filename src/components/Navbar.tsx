@@ -3,24 +3,28 @@ import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { industries } from "@/data/industries";
+import { services } from "@/data/services";
 import sabasamIcon from "@/assets/sabasam-icon.png";
 
 const navLinks = [
   { label: "Home", href: "/#hero" },
-  { label: "Services", href: "/#services" },
-  { label: "About Us", href: "/about-us", isRoute: true },
-  { label: "Contact", href: "/#contact" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileIndustriesOpen, setMobileIndustriesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const servicesRef = useRef<HTMLLIElement>(null);
   const dropdownRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
+      if (servicesRef.current && !servicesRef.current.contains(e.target as Node)) {
+        setServicesOpen(false);
+      }
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setDropdownOpen(false);
       }
@@ -38,6 +42,12 @@ const Navbar = () => {
   const linkClass =
     "relative text-sm text-muted-foreground hover:text-primary transition-colors duration-300 after:absolute after:bottom-[-4px] after:left-0 after:h-px after:w-0 hover:after:w-full after:bg-primary/50 after:transition-all after:duration-300";
 
+  const dropdownMenuClass =
+    "absolute top-full left-1/2 -translate-x-1/2 mt-4 w-72 rounded-xl border border-primary/10 bg-background/80 backdrop-blur-xl shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.15)] py-2 animate-fade-in";
+
+  const dropdownItemClass =
+    "block px-4 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all duration-200";
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${
@@ -46,11 +56,10 @@ const Navbar = () => {
           : "h-14 bg-background/40 backdrop-blur-md border-border/20"
       }`}
     >
-      {/* Top glow line */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
       <div className="container mx-auto flex items-center justify-between h-full px-6">
-        {/* Left: Logo + Brand */}
+        {/* Logo */}
         <Link to="/" className="shrink-0 flex items-center gap-2.5 group">
           <img
             src={sabasamIcon}
@@ -77,18 +86,41 @@ const Navbar = () => {
           </div>
         </Link>
 
-        {/* Right: Nav links */}
+        {/* Desktop Nav */}
         <ul className="hidden md:flex items-center gap-7">
-          {navLinks.slice(0, 2).map((l) => (
-            <li key={l.href}>
-              {l.isRoute ? (
-                <Link to={l.href} className={linkClass}>{l.label}</Link>
-              ) : (
-                <a href={l.href} className={linkClass}>{l.label}</a>
-              )}
-            </li>
-          ))}
+          <li>
+            <a href="/#hero" className={linkClass}>Home</a>
+          </li>
 
+          {/* Services Dropdown */}
+          <li className="relative" ref={servicesRef}>
+            <button
+              onClick={() => setServicesOpen(!servicesOpen)}
+              className={`flex items-center gap-1 ${linkClass}`}
+            >
+              Services
+              <ChevronDown
+                size={14}
+                className={`transition-transform duration-300 ${servicesOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+            {servicesOpen && (
+              <div className={dropdownMenuClass}>
+                {services.map((s) => (
+                  <Link
+                    key={s.slug}
+                    to={`/services/${s.slug}`}
+                    onClick={() => setServicesOpen(false)}
+                    className={dropdownItemClass}
+                  >
+                    {s.title}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </li>
+
+          {/* Target Industries Dropdown */}
           <li className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -101,11 +133,11 @@ const Navbar = () => {
               />
             </button>
             {dropdownOpen && (
-              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-64 rounded-xl border border-primary/10 bg-background/80 backdrop-blur-xl shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.15)] py-2 animate-fade-in">
+              <div className={dropdownMenuClass}>
                 <Link
                   to="/target-industries"
                   onClick={() => setDropdownOpen(false)}
-                  className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all duration-200"
+                  className={dropdownItemClass}
                 >
                   All Industries
                 </Link>
@@ -115,7 +147,7 @@ const Navbar = () => {
                     key={ind.slug}
                     to={`/target-industries/${ind.slug}`}
                     onClick={() => setDropdownOpen(false)}
-                    className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all duration-200"
+                    className={dropdownItemClass}
                   >
                     {ind.title}
                   </Link>
@@ -125,27 +157,20 @@ const Navbar = () => {
           </li>
 
           <li>
-            <Link to="/sample-projects" className={linkClass}>
-              Sample Projects
-            </Link>
+            <Link to="/sample-projects" className={linkClass}>Sample Projects</Link>
           </li>
-
-          {navLinks.slice(2).map((l) => (
-            <li key={l.href}>
-              {l.isRoute ? (
-                <Link to={l.href} className={linkClass}>{l.label}</Link>
-              ) : (
-                <a href={l.href} className={linkClass}>{l.label}</a>
-              )}
-            </li>
-          ))}
-
+          <li>
+            <Link to="/about-us" className={linkClass}>About Us</Link>
+          </li>
+          <li>
+            <a href="/#contact" className={linkClass}>Contact</a>
+          </li>
           <li>
             <ThemeToggle />
           </li>
         </ul>
 
-        {/* Mobile: hamburger */}
+        {/* Mobile hamburger */}
         <button
           className="md:hidden text-foreground hover:text-primary transition-colors duration-300"
           onClick={() => setOpen(!open)}
@@ -158,45 +183,51 @@ const Navbar = () => {
       {open && (
         <div className="md:hidden bg-background/90 backdrop-blur-xl border-t border-primary/10 animate-fade-in">
           <ul className="flex flex-col gap-4 px-6 py-6">
-            {navLinks.slice(0, 2).map((l) => (
-              <li key={l.href}>
-                {l.isRoute ? (
-                  <Link to={l.href} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">{l.label}</Link>
-                ) : (
-                  <a href={l.href} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">{l.label}</a>
-                )}
-              </li>
-            ))}
+            <li>
+              <a href="/#hero" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">Home</a>
+            </li>
 
+            {/* Mobile Services */}
+            <li>
+              <button
+                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
+              >
+                Services
+                <ChevronDown size={14} className={`transition-transform duration-300 ${mobileServicesOpen ? "rotate-180" : ""}`} />
+              </button>
+              {mobileServicesOpen && (
+                <ul className="mt-2 ml-4 flex flex-col gap-2">
+                  {services.map((s) => (
+                    <li key={s.slug}>
+                      <Link to={`/services/${s.slug}`} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
+                        {s.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+
+            {/* Mobile Industries */}
             <li>
               <button
                 onClick={() => setMobileIndustriesOpen(!mobileIndustriesOpen)}
                 className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
               >
                 Target Industries
-                <ChevronDown
-                  size={14}
-                  className={`transition-transform duration-300 ${mobileIndustriesOpen ? "rotate-180" : ""}`}
-                />
+                <ChevronDown size={14} className={`transition-transform duration-300 ${mobileIndustriesOpen ? "rotate-180" : ""}`} />
               </button>
               {mobileIndustriesOpen && (
                 <ul className="mt-2 ml-4 flex flex-col gap-2">
                   <li>
-                    <Link
-                      to="/target-industries"
-                      onClick={() => setOpen(false)}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
-                    >
+                    <Link to="/target-industries" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
                       All Industries
                     </Link>
                   </li>
                   {industries.map((ind) => (
                     <li key={ind.slug}>
-                      <Link
-                        to={`/target-industries/${ind.slug}`}
-                        onClick={() => setOpen(false)}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
-                      >
+                      <Link to={`/target-industries/${ind.slug}`} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
                         {ind.title}
                       </Link>
                     </li>
@@ -206,24 +237,20 @@ const Navbar = () => {
             </li>
 
             <li>
-              <Link
-                to="/sample-projects"
-                onClick={() => setOpen(false)}
-                className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
-              >
+              <Link to="/sample-projects" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
                 Sample Projects
               </Link>
             </li>
-
-            {navLinks.slice(2).map((l) => (
-              <li key={l.href}>
-                {l.isRoute ? (
-                  <Link to={l.href} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">{l.label}</Link>
-                ) : (
-                  <a href={l.href} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">{l.label}</a>
-                )}
-              </li>
-            ))}
+            <li>
+              <Link to="/about-us" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
+                About Us
+              </Link>
+            </li>
+            <li>
+              <a href="/#contact" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
+                Contact
+              </a>
+            </li>
           </ul>
         </div>
       )}
