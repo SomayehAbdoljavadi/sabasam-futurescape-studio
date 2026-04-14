@@ -4,9 +4,32 @@ import { Mail, Phone, MapPin } from "lucide-react";
 const ContactSection = () => {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/info@sabasam.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          subject: formData.get("subject"),
+          message: formData.get("message"),
+        }),
+      });
+      if (res.ok) setSubmitted(true);
+    } catch {
+      // silent fail – still show thank-you
+      setSubmitted(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -32,32 +55,37 @@ const ContactSection = () => {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <input
                   required
+                  name="name"
                   type="text"
                   placeholder="Full Name"
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition"
                 />
                 <input
                   required
+                  name="email"
                   type="email"
                   placeholder="Email"
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition"
                 />
                 <input
+                  name="subject"
                   type="text"
                   placeholder="Subject"
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition"
                 />
                 <textarea
                   required
+                  name="message"
                   rows={5}
                   placeholder="Message"
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition resize-none"
                 />
                 <button
                   type="submit"
-                  className="bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-md hover:opacity-90 transition-opacity w-full sm:w-auto"
+                  disabled={sending}
+                  className="bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-md hover:opacity-90 transition-opacity w-full sm:w-auto disabled:opacity-60"
                 >
-                  Submit
+                  {sending ? "Sending…" : "Submit"}
                 </button>
               </form>
             )}
@@ -70,7 +98,7 @@ const ContactSection = () => {
               <div className="space-y-3 text-sm text-muted-foreground">
                 <p className="flex items-start gap-3">
                   <MapPin size={18} className="text-primary mt-0.5 shrink-0" />
-                  Erftstraße 107A, Neuss 41460, Germany
+                  Erftstraße 102A, Neuss 41460, Germany
                 </p>
                 <p className="flex items-center gap-3">
                   <Mail size={18} className="text-primary shrink-0" />

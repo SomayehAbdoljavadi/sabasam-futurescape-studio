@@ -8,7 +8,7 @@ import sabasamIcon from "@/assets/sabasam-icon.png";
 const navLinks = [
   { label: "Home", href: "/#hero" },
   { label: "Services", href: "/#services" },
-  { label: "About Us", href: "/#about" },
+  { label: "About Us", href: "/about-us", isRoute: true },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -81,9 +81,11 @@ const Navbar = () => {
         <ul className="hidden md:flex items-center gap-7">
           {navLinks.slice(0, 2).map((l) => (
             <li key={l.href}>
-              <a href={l.href} className={linkClass}>
-                {l.label}
-              </a>
+              {l.isRoute ? (
+                <Link to={l.href} className={linkClass}>{l.label}</Link>
+              ) : (
+                <a href={l.href} className={linkClass}>{l.label}</a>
+              )}
             </li>
           ))}
 
@@ -130,9 +132,11 @@ const Navbar = () => {
 
           {navLinks.slice(2).map((l) => (
             <li key={l.href}>
-              <a href={l.href} className={linkClass}>
-                {l.label}
-              </a>
+              {l.isRoute ? (
+                <Link to={l.href} className={linkClass}>{l.label}</Link>
+              ) : (
+                <a href={l.href} className={linkClass}>{l.label}</a>
+              )}
             </li>
           ))}
 
@@ -156,13 +160,11 @@ const Navbar = () => {
           <ul className="flex flex-col gap-4 px-6 py-6">
             {navLinks.slice(0, 2).map((l) => (
               <li key={l.href}>
-                <a
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
-                >
-                  {l.label}
-                </a>
+                {l.isRoute ? (
+                  <Link to={l.href} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">{l.label}</Link>
+                ) : (
+                  <a href={l.href} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">{l.label}</a>
+                )}
               </li>
             ))}
 
@@ -215,13 +217,11 @@ const Navbar = () => {
 
             {navLinks.slice(2).map((l) => (
               <li key={l.href}>
-                <a
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
-                >
-                  {l.label}
-                </a>
+                {l.isRoute ? (
+                  <Link to={l.href} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">{l.label}</Link>
+                ) : (
+                  <a href={l.href} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">{l.label}</a>
+                )}
               </li>
             ))}
           </ul>
