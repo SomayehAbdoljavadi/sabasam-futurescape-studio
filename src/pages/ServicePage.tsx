@@ -1,12 +1,14 @@
 import { useParams, Navigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { services } from "@/data/services";
 import { CheckCircle } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { getServices } from "@/i18n/data";
 
 const ServicePage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const service = services.find((s) => s.slug === slug);
+  const { lang, t } = useLanguage();
+  const service = getServices(lang).find((s) => s.slug === slug);
 
   if (!service) return <Navigate to="/" replace />;
 
@@ -14,12 +16,11 @@ const ServicePage = () => {
     <main className="bg-background text-foreground min-h-screen">
       <Navbar />
 
-      {/* Hero */}
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
         <div className="container mx-auto max-w-4xl relative">
           <p className="text-primary text-sm font-medium tracking-widest uppercase mb-3">
-            Our Services
+            {t.servicePage.eyebrow}
           </p>
           <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
             {service.title}
@@ -31,7 +32,6 @@ const ServicePage = () => {
         </div>
       </section>
 
-      {/* Subsections */}
       <section className="py-20 px-6">
         <div className="container mx-auto max-w-5xl">
           <div className="space-y-10">
@@ -46,10 +46,7 @@ const ServicePage = () => {
                   </span>
                   <div>
                     <h3 className="font-display text-xl font-semibold mb-3 flex items-center gap-2">
-                      <CheckCircle
-                        size={18}
-                        className="text-primary shrink-0"
-                      />
+                      <CheckCircle size={18} className="text-primary shrink-0" />
                       {sub.title}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">

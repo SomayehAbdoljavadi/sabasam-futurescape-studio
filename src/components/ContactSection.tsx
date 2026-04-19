@@ -1,9 +1,10 @@
 import { useState, type FormEvent } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useT } from "@/i18n/LanguageContext";
 
 const ContactSection = () => {
+  const t = useT();
   const [submitted, setSubmitted] = useState(false);
-
   const [sending, setSending] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -25,7 +26,6 @@ const ContactSection = () => {
       });
       if (res.ok) setSubmitted(true);
     } catch {
-      // silent fail – still show thank-you
       setSubmitted(true);
     } finally {
       setSending(false);
@@ -36,20 +36,19 @@ const ContactSection = () => {
     <section id="contact" className="py-28 px-6">
       <div className="container mx-auto max-w-5xl">
         <p className="text-primary text-sm font-medium tracking-widest uppercase mb-3 text-center">
-          Reach Out
+          {t.contact.eyebrow}
         </p>
         <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4">
-          Get in Touch
+          {t.contact.title}
         </h2>
         <div className="line-accent w-16 mx-auto mb-16" />
 
         <div className="grid md:grid-cols-2 gap-16">
-          {/* Form */}
           <div>
             {submitted ? (
               <div className="glass rounded-lg p-10 text-center">
-                <p className="text-primary font-semibold text-lg mb-2">Thank you!</p>
-                <p className="text-muted-foreground text-sm">We'll get back to you shortly.</p>
+                <p className="text-primary font-semibold text-lg mb-2">{t.contact.thankYou}</p>
+                <p className="text-muted-foreground text-sm">{t.contact.thankYouSub}</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -57,27 +56,27 @@ const ContactSection = () => {
                   required
                   name="name"
                   type="text"
-                  placeholder="Full Name"
+                  placeholder={t.contact.fullName}
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition"
                 />
                 <input
                   required
                   name="email"
                   type="email"
-                  placeholder="Email"
+                  placeholder={t.contact.email}
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition"
                 />
                 <input
                   name="subject"
                   type="text"
-                  placeholder="Subject"
+                  placeholder={t.contact.subject}
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition"
                 />
                 <textarea
                   required
                   name="message"
                   rows={5}
-                  placeholder="Message"
+                  placeholder={t.contact.message}
                   className="w-full bg-secondary/60 border border-border rounded-md px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition resize-none"
                 />
                 <button
@@ -85,16 +84,15 @@ const ContactSection = () => {
                   disabled={sending}
                   className="bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-md hover:opacity-90 transition-opacity w-full sm:w-auto disabled:opacity-60"
                 >
-                  {sending ? "Sending…" : "Submit"}
+                  {sending ? t.contact.sending : t.contact.submit}
                 </button>
               </form>
             )}
           </div>
 
-          {/* Info */}
           <div className="space-y-8">
             <div>
-              <h3 className="font-display font-semibold text-lg mb-4">Head Office</h3>
+              <h3 className="font-display font-semibold text-lg mb-4">{t.contact.headOffice}</h3>
               <div className="space-y-3 text-sm text-muted-foreground">
                 <p className="flex items-start gap-3">
                   <MapPin size={18} className="text-primary mt-0.5 shrink-0" />
@@ -112,9 +110,9 @@ const ContactSection = () => {
             </div>
 
             <div>
-              <h3 className="font-display font-semibold text-lg mb-3">Careers</h3>
+              <h3 className="font-display font-semibold text-lg mb-3">{t.contact.careers}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Join our team of dedicated professionals. Send your cover letter and resume to{" "}
+                {t.contact.careersText}{" "}
                 <a href="mailto:career@sabasam.com" className="text-primary hover:underline">
                   career@sabasam.com
                 </a>
@@ -122,7 +120,7 @@ const ContactSection = () => {
             </div>
 
             <div>
-              <h3 className="font-display font-semibold text-lg mb-3">Request a Consultation</h3>
+              <h3 className="font-display font-semibold text-lg mb-3">{t.contact.requestConsult}</h3>
               <p className="text-sm text-muted-foreground">
                 <Phone size={16} className="inline text-primary mr-2" />
                 +49 172 7575763

@@ -2,15 +2,16 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
-import { industries } from "@/data/industries";
-import { services } from "@/data/services";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { getIndustries, getServices } from "@/i18n/data";
 import sabasamIcon from "@/assets/sabasam-icon.png";
 
-const navLinks = [
-  { label: "Home", href: "/#hero" },
-];
-
 const Navbar = () => {
+  const { lang, t } = useLanguage();
+  const industries = getIndustries(lang);
+  const services = getServices(lang);
+
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -89,7 +90,7 @@ const Navbar = () => {
         {/* Desktop Nav */}
         <ul className="hidden md:flex items-center gap-7">
           <li>
-            <a href="/#hero" className={linkClass}>Home</a>
+            <a href="/#hero" className={linkClass}>{t.nav.home}</a>
           </li>
 
           {/* Services Dropdown */}
@@ -98,7 +99,7 @@ const Navbar = () => {
               onClick={() => setServicesOpen(!servicesOpen)}
               className={`flex items-center gap-1 ${linkClass}`}
             >
-              Services
+              {t.nav.services}
               <ChevronDown
                 size={14}
                 className={`transition-transform duration-300 ${servicesOpen ? "rotate-180" : ""}`}
@@ -126,7 +127,7 @@ const Navbar = () => {
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className={`flex items-center gap-1 ${linkClass}`}
             >
-              Target Industries
+              {t.nav.targetIndustries}
               <ChevronDown
                 size={14}
                 className={`transition-transform duration-300 ${dropdownOpen ? "rotate-180" : ""}`}
@@ -139,7 +140,7 @@ const Navbar = () => {
                   onClick={() => setDropdownOpen(false)}
                   className={dropdownItemClass}
                 >
-                  All Industries
+                  {t.nav.allIndustries}
                 </Link>
                 <div className="h-px bg-gradient-to-r from-transparent via-border/40 to-transparent mx-3 my-1" />
                 {industries.map((ind) => (
@@ -157,26 +158,33 @@ const Navbar = () => {
           </li>
 
           <li>
-            <Link to="/sample-projects" className={linkClass}>Sample Projects</Link>
+            <Link to="/sample-projects" className={linkClass}>{t.nav.sampleProjects}</Link>
           </li>
           <li>
-            <Link to="/about-us" className={linkClass}>About Us</Link>
+            <Link to="/about-us" className={linkClass}>{t.nav.aboutUs}</Link>
           </li>
           <li>
-            <a href="/#contact" className={linkClass}>Contact</a>
+            <a href="/#contact" className={linkClass}>{t.nav.contact}</a>
+          </li>
+          <li>
+            <LanguageSwitcher />
           </li>
           <li>
             <ThemeToggle />
           </li>
         </ul>
 
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden text-foreground hover:text-primary transition-colors duration-300"
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        {/* Mobile right side */}
+        <div className="md:hidden flex items-center gap-3">
+          <LanguageSwitcher />
+          <button
+            className="text-foreground hover:text-primary transition-colors duration-300"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -184,7 +192,7 @@ const Navbar = () => {
         <div className="md:hidden bg-background/90 backdrop-blur-xl border-t border-primary/10 animate-fade-in">
           <ul className="flex flex-col gap-4 px-6 py-6">
             <li>
-              <a href="/#hero" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">Home</a>
+              <a href="/#hero" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">{t.nav.home}</a>
             </li>
 
             {/* Mobile Services */}
@@ -193,7 +201,7 @@ const Navbar = () => {
                 onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
                 className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
               >
-                Services
+                {t.nav.services}
                 <ChevronDown size={14} className={`transition-transform duration-300 ${mobileServicesOpen ? "rotate-180" : ""}`} />
               </button>
               {mobileServicesOpen && (
@@ -215,14 +223,14 @@ const Navbar = () => {
                 onClick={() => setMobileIndustriesOpen(!mobileIndustriesOpen)}
                 className="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
               >
-                Target Industries
+                {t.nav.targetIndustries}
                 <ChevronDown size={14} className={`transition-transform duration-300 ${mobileIndustriesOpen ? "rotate-180" : ""}`} />
               </button>
               {mobileIndustriesOpen && (
                 <ul className="mt-2 ml-4 flex flex-col gap-2">
                   <li>
                     <Link to="/target-industries" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
-                      All Industries
+                      {t.nav.allIndustries}
                     </Link>
                   </li>
                   {industries.map((ind) => (
@@ -238,18 +246,21 @@ const Navbar = () => {
 
             <li>
               <Link to="/sample-projects" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
-                Sample Projects
+                {t.nav.sampleProjects}
               </Link>
             </li>
             <li>
               <Link to="/about-us" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
-                About Us
+                {t.nav.aboutUs}
               </Link>
             </li>
             <li>
               <a href="/#contact" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
-                Contact
+                {t.nav.contact}
               </a>
+            </li>
+            <li>
+              <ThemeToggle />
             </li>
           </ul>
         </div>
