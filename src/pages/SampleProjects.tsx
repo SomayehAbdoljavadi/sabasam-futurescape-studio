@@ -8,17 +8,13 @@ import project03 from "@/assets/project-03.jpg";
 import project04 from "@/assets/project-04.jpg";
 import project05 from "@/assets/project-05.jpg";
 import project06 from "@/assets/project-06.jpg";
+import { useT } from "@/i18n/LanguageContext";
 
-const projects = [
-  { title: "Electrical Distribution Panel", category: "Pre-commissioning Test Sheet", image: project01 },
-  { title: "Instrument — Digital Loop", category: "Functional Test Sheet", image: project02 },
-  { title: "P&ID Mark-up", category: "Condensate Stabilization Unit", image: project03 },
-  { title: "Water Supply System — Piping", category: "Check List", image: project04 },
-  { title: "Power Transformer", category: "Function Test Sheet", image: project05 },
-  { title: "SLD Mark-up", category: "Overall Single Line Diagram", image: project06 },
-];
+const images = [project01, project02, project03, project04, project05, project06];
 
 const SampleProjects = () => {
+  const t = useT();
+  const projects = t.sampleProjects.items.map((p, i) => ({ ...p, image: images[i] }));
   const [selected, setSelected] = useState<typeof projects[number] | null>(null);
 
   return (
@@ -27,11 +23,11 @@ const SampleProjects = () => {
 
       <section className="pt-32 pb-16 px-6">
         <div className="container mx-auto text-center">
-          <p className="text-primary text-sm font-medium tracking-widest uppercase mb-3">Our Work</p>
-          <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">Sample Project Files</h1>
+          <p className="text-primary text-sm font-medium tracking-widest uppercase mb-3">{t.sampleProjects.eyebrow}</p>
+          <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">{t.sampleProjects.title}</h1>
           <div className="line-accent w-20 mx-auto mb-6" />
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-            A selection of commissioning deliverables showcasing our documentation standards, including test sheets, P&ID mark-ups, single line diagrams, and checklists.
+            {t.sampleProjects.subtitle}
           </p>
         </div>
       </section>
@@ -61,7 +57,6 @@ const SampleProjects = () => {
         </div>
       </section>
 
-      {/* Lightbox */}
       {selected && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in p-4"

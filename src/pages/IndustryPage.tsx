@@ -1,10 +1,12 @@
 import { useParams, Navigate } from "react-router-dom";
 import IndustryPageLayout from "@/components/IndustryPageLayout";
-import { industries } from "@/data/industries";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { getIndustries } from "@/i18n/data";
 
 const IndustryPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const industry = industries.find((i) => i.slug === slug);
+  const { lang } = useLanguage();
+  const industry = getIndustries(lang).find((i) => i.slug === slug);
 
   if (!industry) return <Navigate to="/target-industries" replace />;
 
