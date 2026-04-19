@@ -350,6 +350,6 @@ export const translations = {
       eyebrow: "Unsere Leistungen",
     },
   },
-} as const;
+};
 
 export type Translation = typeof translations.en;
