@@ -1,5 +1,6 @@
 import { useParams, Navigate } from "react-router-dom";
 import IndustryPageLayout from "@/components/IndustryPageLayout";
+import SEO from "@/components/SEO";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { getIndustries } from "@/i18n/data";
 
@@ -10,7 +11,15 @@ const IndustryPage = () => {
 
   if (!industry) return <Navigate to="/target-industries" replace />;
 
-  return <IndustryPageLayout industry={industry} />;
+  return (
+    <>
+      <SEO
+        title={`${industry.title} | Sabasam E&C`}
+        description={industry.subtitle}
+      />
+      <IndustryPageLayout industry={industry} />
+    </>
+  );
 };
 
 export default IndustryPage;

@@ -1,6 +1,7 @@
 import { useParams, Navigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { CheckCircle } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { getServices } from "@/i18n/data";
@@ -14,6 +15,10 @@ const ServicePage = () => {
 
   return (
     <main className="bg-background text-foreground min-h-screen">
+      <SEO
+        title={`${service.title} | Sabasam E&C`}
+        description={service.subtitle || service.intro.slice(0, 155)}
+      />
       <Navbar />
 
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
