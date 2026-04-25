@@ -1,13 +1,6 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { translations, type Lang, type Translation } from "./translations";
-
-interface LanguageContextValue {
-  lang: Lang;
-  setLang: (lang: Lang) => void;
-  t: Translation;
-}
-
-const LanguageContext = createContext<LanguageContextValue | undefined>(undefined);
+import { useContext, useEffect, useState, type ReactNode } from "react";
+import { translations, type Lang } from "./translations";
+import { LanguageContext } from "./language-context";
 
 const STORAGE_KEY = "sabasam-lang";
 
