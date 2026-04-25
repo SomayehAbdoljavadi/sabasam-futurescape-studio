@@ -149,6 +149,7 @@ export const translations = {
       services: "Services",
       about: "About",
       contact: "Contact",
+      imprint: "Imprint",
     },
     // Sample projects
     sampleProjects: {
@@ -321,6 +322,7 @@ export const translations = {
       services: "Leistungen",
       about: "Über uns",
       contact: "Kontakt",
+      imprint: "Impressum",
     },
     sampleProjects: {
       eyebrow: "Unsere Arbeit",
