@@ -12,6 +12,7 @@ const Footer = () => {
           <Link to="/services" className="hover:text-foreground transition-colors">{t.footer.services}</Link>
           <Link to="/about-us" className="hover:text-foreground transition-colors">{t.footer.about}</Link>
           <Link to="/contact" className="hover:text-foreground transition-colors">{t.footer.contact}</Link>
+          <Link to="/imprint" className="hover:text-foreground transition-colors">{t.footer.imprint ?? "Imprint"}</Link>
         </div>
       </div>
     </footer>
