@@ -8,17 +8,23 @@ import project03 from "@/assets/project-03.jpg";
 import project04 from "@/assets/project-04.jpg";
 import project05 from "@/assets/project-05.jpg";
 import project06 from "@/assets/project-06.jpg";
-import { useT } from "@/i18n/LanguageContext";
+import { useLanguage, useT } from "@/i18n/LanguageContext";
+import SEO from "@/components/SEO";
 
 const images = [project01, project02, project03, project04, project05, project06];
 
 const SampleProjects = () => {
   const t = useT();
+  const { lang } = useLanguage();
   const projects = t.sampleProjects.items.map((p, i) => ({ ...p, image: images[i] }));
   const [selected, setSelected] = useState<typeof projects[number] | null>(null);
 
   return (
     <main className="bg-background text-foreground min-h-screen">
+      <SEO
+        title={lang === "de" ? "Referenzprojekte | Sabasam E&C" : "Sample Projects | Sabasam E&C"}
+        description={lang === "de" ? "Ausgewählte Commissioning-Referenzprojekte von Sabasam E&C in Chemie, Öl & Gas, Energieerzeugung und mehr." : "Selected commissioning reference projects by Sabasam E&C across chemical, oil & gas, power generation and more."}
+      />
       <Navbar />
 
       <section className="pt-32 pb-16 px-6">

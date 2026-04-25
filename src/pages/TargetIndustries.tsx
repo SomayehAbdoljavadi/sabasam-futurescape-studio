@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { getIndustries } from "@/i18n/data";
 
@@ -11,6 +12,10 @@ const TargetIndustries = () => {
 
   return (
     <main className="bg-background text-foreground min-h-screen">
+      <SEO
+        title={lang === "de" ? "Zielbranchen | Sabasam E&C Commissioning" : "Target Industries | Sabasam E&C Commissioning"}
+        description={lang === "de" ? "Commissioning-Beratung für Chemie, Öl & Gas, Energieerzeugung, Rechenzentren, Bergbau und mehr." : "Commissioning consulting across chemical, oil & gas, power generation, data centers, mining and more."}
+      />
       <Navbar />
 
       <section className="pt-32 pb-16 px-6">

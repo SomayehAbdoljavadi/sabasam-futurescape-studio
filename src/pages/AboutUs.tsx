@@ -1,12 +1,18 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { CheckCircle, Target } from "lucide-react";
-import { useT } from "@/i18n/LanguageContext";
+import { useLanguage, useT } from "@/i18n/LanguageContext";
 
 const AboutUs = () => {
   const t = useT();
+  const { lang } = useLanguage();
   return (
     <main className="bg-background text-foreground min-h-screen">
+      <SEO
+        title={lang === "de" ? "Über uns | Sabasam E&C Commissioning Consulting" : "About Us | Sabasam E&C Commissioning Consulting"}
+        description={lang === "de" ? "Erfahren Sie mehr über Sabasam E&C – Experten für Pre-Commissioning, Commissioning und Anfahrleistungen für komplexe Industrieprojekte weltweit." : "Learn about Sabasam E&C — experts in pre-commissioning, commissioning and startup consulting for complex industrial projects worldwide."}
+      />
       <Navbar />
 
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
