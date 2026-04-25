@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import { useT } from "@/i18n/LanguageContext";
@@ -29,27 +30,28 @@ const HeroSection = () => {
           {t.hero.subtitle}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="#services"
+          <Link
+            to="/services"
             className="inline-block bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-md hover:opacity-90 transition-opacity"
           >
             {t.hero.ctaServices}
-          </a>
-          <a
-            href="#contact"
+          </Link>
+          <Link
+            to="/contact"
             className="inline-block border border-border text-foreground font-semibold px-8 py-3 rounded-md hover:bg-secondary transition-colors"
           >
             {t.hero.ctaConsult}
-          </a>
+          </Link>
         </div>
       </div>
 
-      <a
-        href="#services"
+      <Link
+        to="/services"
         className="absolute bottom-10 left-1/2 -translate-x-1/2 text-muted-foreground animate-bounce"
+        aria-label="Explore services"
       >
         <ChevronDown size={28} />
-      </a>
+      </Link>
     </section>
   );
 };
