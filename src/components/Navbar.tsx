@@ -90,7 +90,7 @@ const Navbar = () => {
         {/* Desktop Nav */}
         <ul className="hidden md:flex items-center gap-7">
           <li>
-            <a href="/#hero" className={linkClass}>{t.nav.home}</a>
+            <Link to="/" className={linkClass}>{t.nav.home}</Link>
           </li>
 
           {/* Services Dropdown */}
@@ -107,6 +107,14 @@ const Navbar = () => {
             </button>
             {servicesOpen && (
               <div className={dropdownMenuClass}>
+                <Link
+                  to="/services"
+                  onClick={() => setServicesOpen(false)}
+                  className={dropdownItemClass}
+                >
+                  {t.servicesSection.title}
+                </Link>
+                <div className="h-px bg-gradient-to-r from-transparent via-border/40 to-transparent mx-3 my-1" />
                 {services.map((s) => (
                   <Link
                     key={s.slug}
@@ -164,7 +172,7 @@ const Navbar = () => {
             <Link to="/about-us" className={linkClass}>{t.nav.aboutUs}</Link>
           </li>
           <li>
-            <a href="/#contact" className={linkClass}>{t.nav.contact}</a>
+            <Link to="/contact" className={linkClass}>{t.nav.contact}</Link>
           </li>
           <li>
             <LanguageSwitcher />
@@ -192,7 +200,7 @@ const Navbar = () => {
         <div className="md:hidden bg-background/90 backdrop-blur-xl border-t border-primary/10 animate-fade-in">
           <ul className="flex flex-col gap-4 px-6 py-6">
             <li>
-              <a href="/#hero" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">{t.nav.home}</a>
+              <Link to="/" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">{t.nav.home}</Link>
             </li>
 
             {/* Mobile Services */}
@@ -206,6 +214,11 @@ const Navbar = () => {
               </button>
               {mobileServicesOpen && (
                 <ul className="mt-2 ml-4 flex flex-col gap-2">
+                  <li>
+                    <Link to="/services" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
+                      {t.servicesSection.title}
+                    </Link>
+                  </li>
                   {services.map((s) => (
                     <li key={s.slug}>
                       <Link to={`/services/${s.slug}`} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
@@ -255,9 +268,9 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <a href="/#contact" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
+              <Link to="/contact" onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
                 {t.nav.contact}
-              </a>
+              </Link>
             </li>
             <li>
               <ThemeToggle />
